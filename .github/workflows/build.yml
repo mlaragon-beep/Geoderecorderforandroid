@@ -8,8 +8,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: geode-sdk/build-geode-mod@main
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
         with:
-          target: android64
-          build-args: -p android64
+          ndk-version: r26d
+
+      - name: Install Geode CLI & SDK
+        run: |
+          curl -L https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux-x86_64.zip -o geode-cli.zip
+          unzip geode-cli.zip -d ~/.local/bin
+          chmod +x ~/.local/bin/geode
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          geode config set --default-developer CustomDev
+          geode sdk install-linux ~/geode-sdk
+          geode config set sdk-path ~/geode-sdk
+          geode sdk update 5.3.0
+          geode sdk install-binaries -p android64
+
+      - name: Build Android64 Mod
+        env:
+          ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
+          GEODE_SDK: /home/runner/geode-sdk
+        run: |
+          geode build -p android64
+
+      - name: Upload .geode Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android64-geode-mod
+          path: build-android64/*.geode
           
