@@ -18,7 +18,7 @@ jobs:
       - name: Install Geode CLI & SDK
         run: |
           mkdir -p ~/.local/bin
-          CLI_URL=$(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest | grep -oE 'https://[^"]+linux-x86_64\.zip' | head -n 1)
+          CLI_URL=$(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest | grep -oE 'https://[^"]+linux[^"]*\.zip' | grep -v 'arm' | head -n 1)
           echo "Downloading CLI from: $CLI_URL"
           curl -fL "$CLI_URL" -o geode-cli.zip
           unzip geode-cli.zip -d ~/.local/bin
@@ -38,8 +38,5 @@ jobs:
         run: |
           geode build -p android64
 
-      - name: Upload .geode Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android64-geode-mod
-          path: build-android64/*.geode
+      -
+      
