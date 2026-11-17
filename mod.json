@@ -1,0 +1,73 @@
+{
+	"geode": "5.3.0",
+	"gd": {
+		"android": "2.2081"
+	},
+	"id": "custom.android-recorder",
+	"name": "Android Internal Recorder",
+	"version": "1.0.0",
+	"developer": "CustomDev",
+	"description": "Zero-lag hardware-accelerated internal video & FMOD audio recorder for Android.",
+	"settings": {
+		"resolution-scale": {
+			"type": "float",
+			"name": "Resolution Scale",
+			"description": "1.0 = Native screen resolution. Lower to 0.75 or 0.5 for zero lag on older GPUs.",
+			"default": 0.75,
+			"min": 0.25,
+			"max": 1.0,
+			"control": {
+				"slider": true,
+				"slider-step": 0.05
+			}
+		},
+		"target-fps": {
+			"type": "int",
+			"name": "Recording FPS",
+			"description": "Target video framerate (30 or 60 recommended for smooth gameplay).",
+			"default": 60,
+			"min": 24,
+			"max": 120
+		},
+		"video-bitrate-mbps": {
+			"type": "int",
+			"name": "Video Bitrate (Mbps)",
+			"description": "Higher = sharper quality, slightly higher storage write load.",
+			"default": 12,
+			"min": 2,
+			"max": 50
+		},
+		"use-hevc": {
+			"type": "bool",
+			"name": "Use H.265 (HEVC)",
+			"description": "Better quality at lower bitrates on modern Android devices.",
+			"default": false
+		},
+		"record-audio": {
+			"type": "bool",
+			"name": "Capture Internal FMOD Audio",
+			"description": "Records clean in-game music and SFX directly from FMOD.",
+			"default": true
+		},
+		"audio-bitrate-kbps": {
+			"type": "int",
+			"name": "Audio Bitrate (kbps)",
+			"description": "AAC audio bitrate.",
+			"default": 192,
+			"min": 64,
+			"max": 320
+		},
+		"show-overlay": {
+			"type": "bool",
+			"name": "Show Floating Record Button",
+			"description": "Displays a small on-screen button to start/stop recording anywhere without pausing.",
+			"default": true
+		},
+		"save-to-movies": {
+			"type": "bool",
+			"name": "Save to /sdcard/Movies",
+			"description": "Saves videos directly to your Gallery's Movies/GeometryDash folder (falls back to Geode folder if permission is denied).",
+			"default": true
+		}
+	}
+}
