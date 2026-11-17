@@ -17,9 +17,13 @@ jobs:
 
       - name: Install Geode CLI & SDK
         run: |
-          curl -L https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux-x86_64.zip -o geode-cli.zip
+          mkdir -p ~/.local/bin
+          CLI_URL=$(curl -s https://api.github.com/repos/geode-sdk/cli/releases/latest | grep -oE 'https://[^"]+linux[^"]+\.zip' | head -n 1)
+          echo "Downloading CLI from: $CLI_URL"
+          curl -fL "$CLI_URL" -o geode-cli.zip
           unzip geode-cli.zip -d ~/.local/bin
           chmod +x ~/.local/bin/geode
+          export PATH="$HOME/.local/bin:$PATH"
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           geode config set --default-developer CustomDev
           geode sdk install-linux ~/geode-sdk
