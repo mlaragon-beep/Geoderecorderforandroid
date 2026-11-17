@@ -37,6 +37,3 @@ jobs:
           GEODE_SDK: /home/runner/geode-sdk
         run: |
           geode build -p android64
-
-      -
-      
